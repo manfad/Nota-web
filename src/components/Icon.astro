@@ -1,0 +1,57 @@
+---
+interface Props {
+  name:
+    | "arrow"
+    | "apple"
+    | "github"
+    | "check"
+    | "command"
+    | "file"
+    | "book"
+    | "bookmark"
+    | "plus"
+    | "leaf"
+    | "globe";
+  size?: number;
+}
+const { name, size = 20 } = Astro.props;
+const paths: Record<string, string> = {
+  arrow: "M7 17 17 7M7 7h10v10",
+  check: "m5 12 4 4L19 6",
+  command:
+    "M9 7V5a2 2 0 1 0-2 2h10a2 2 0 1 0-2-2v14a2 2 0 1 0 2-2H7a2 2 0 1 0 2 2V7Z",
+  file: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Zm0 0v6h6M8 13h8M8 17h5",
+  book: "M12 5v16M12 5C8 2 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-2-10 1Z",
+  bookmark: "M6 3h12v18l-6-4-6 4V3Z",
+  plus: "M12 5v14M5 12h14",
+  leaf: "M20 3C9 1 3 7 5 14c2 7 14 6 15-11ZM4 21 15 10",
+  globe:
+    "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z",
+};
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {
+    name === "apple" ? (
+      <path
+        fill="currentColor"
+        stroke="none"
+        d="M16.6 12.8c0-2 1.6-3 1.7-3.1-1-1.5-2.6-1.7-3.1-1.7-1.3-.1-2.5.8-3.2.8-.6 0-1.6-.8-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.4 2 2.5 1.9 1 0 1.4-.6 2.7-.6 1.2 0 1.6.6 2.7.6s1.8-1 2.4-1.9c.8-1.1 1.1-2.1 1.1-2.2-.1 0-2.1-.8-2.1-3.3h.4ZM14.5 6.7c.5-.7.9-1.6.8-2.5-.8 0-1.8.6-2.3 1.2-.5.6-1 1.5-.9 2.4.9.1 1.8-.4 2.4-1.1Z"
+      />
+    ) : name === "github" ? (
+      <path d="M9 19c-4 1-4-2-6-2m12 5v-3.9c0-1.1-.4-1.7-.8-2.1 2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.4 7a4.4 4.4 0 0 0-.1-3.1s-1-.3-3.3 1.2a11.4 11.4 0 0 0-6 0C6.7 3.6 5.7 3.9 5.7 3.9A4.4 4.4 0 0 0 5.6 7a4.7 4.7 0 0 0-1.3 3.2c0 4.7 2.8 5.7 5.5 6-.4.4-.8 1-.8 2.1V22" />
+    ) : (
+      <path d={paths[name]} />
+    )
+  }
+</svg>
