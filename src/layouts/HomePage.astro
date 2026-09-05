@@ -76,7 +76,15 @@ const hrefFor = (code: Locale) =>
     <a class="skip-link" href="#main">{t.skipLink}</a>
     <header class="site-header wrap">
       <a class="wordmark" href="#" aria-label={t.nav.home}
-        ><Image src={appIcon} alt="" width={40} height={40} />Nota<span
+        ><Image
+          src={appIcon}
+          alt=""
+          width={40}
+          height={40}
+          densities={[2]}
+          format="webp"
+          quality={90}
+        />Nota<span
           class="mac-label">{t.nav.macLabel}</span
         ></a
       >
@@ -176,6 +184,9 @@ const hrefFor = (code: Locale) =>
           alt={t.closing.iconAlt}
           width={88}
           height={88}
+          densities={[2]}
+          format="webp"
+          quality={90}
           loading="lazy"
         /><h2 id="closing-heading">
           {t.closing.heading[0]}<br />{t.closing.heading[1]}
@@ -188,7 +199,15 @@ const hrefFor = (code: Locale) =>
     </main>
     <footer class="site-footer wrap">
       <a class="wordmark" href="#" aria-label={t.footer.home}
-        ><Image src={appIcon} alt="" width={28} height={28} />Nota</a
+        ><Image
+          src={appIcon}
+          alt=""
+          width={28}
+          height={28}
+          densities={[2]}
+          format="webp"
+          quality={90}
+        />Nota</a
       ><p>{t.footer.tagline}</p><a href={site.repository}
         >{t.footer.link} <Icon name="arrow" size={14} /></a
       >
