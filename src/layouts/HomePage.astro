@@ -6,6 +6,7 @@ import { site } from "../config";
 import appIcon from "../assets/icon.png";
 import hero from "../assets/nota-split.png";
 import FeatureShowcase from "../components/FeatureShowcase.astro";
+import FileTypes from "../components/FileTypes.astro";
 import { getTranslation } from "../i18n";
 import {
   defaultLocale,
@@ -133,6 +134,8 @@ const hrefFor = (code: Locale) =>
       </section>
 
       <FeatureShowcase t={t} />
+
+      <FileTypes t={t} />
 
       <section
         id="open-source"

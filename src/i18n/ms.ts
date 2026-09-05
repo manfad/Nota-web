@@ -40,6 +40,7 @@ const ms: Translation = {
     announcement: "{name}, ciri {index} daripada {total}. {description}",
     features: [
       {
+        id: "tabs",
         name: "Tab yang kekal",
         title: "Sambung di tempat anda berhenti.",
         description:
@@ -48,6 +49,7 @@ const ms: Translation = {
         caption: "Ruang kecil untuk perkara yang belum anda selesaikan.",
       },
       {
+        id: "images",
         name: "Imej dalam nota",
         title: "Simpan gambaran penuhnya.",
         description:
@@ -56,6 +58,7 @@ const ms: Translation = {
         caption: "Cip kecil dalam nota anda. Gambar penuh di sebelahnya.",
       },
       {
+        id: "preview",
         name: "Pratonton langsung",
         title: "Tulis dulu. Kemudian lihat.",
         description:
@@ -65,6 +68,35 @@ const ms: Translation = {
           "Perkataan anda di satu sisi. Halaman anda terbentuk di sisi satu lagi.",
       },
       {
+        id: "html",
+        name: "Pratonton HTML",
+        title: "Halaman itu halaman.",
+        description:
+          "Buka fail .html dan lihat WebKit melukisnya di sebelah editor. Stylesheet dan gambar di sebelah fail itu turut serta. Suntingan yang belum disimpan itulah halamannya.",
+        alt: "Sumber HTML di sebelah halaman langsungnya dalam Nota, dengan tab Small things dan Field notes.",
+        caption:
+          "Sumber di satu sisi. Halaman, seperti yang dilihat pelayar, di sisi satu lagi.",
+      },
+      {
+        id: "tables",
+        name: "Jadual CSV",
+        title: "Hamparan, masih fail teks.",
+        description:
+          "Fail .csv atau .tsv dibuka dengan grid di sebelah editor. Isih lajur, tukar halaman, klik baris untuk mendarat padanya dalam fail. Fail kekal teks biasa.",
+        alt: "Products.csv dalam Nota, dengan sumber dipisahkan koma di sebelah jadual yang boleh diisih.",
+        caption: "Fail yang boleh anda cari. Jadual yang boleh anda baca.",
+      },
+      {
+        id: "sql",
+        name: "Dump SQL",
+        title: "Jalankan dump. Baca pangkalan data.",
+        description:
+          "Fail .sql dijalankan ke SQLite dalam memori — bukan fail di cakera. Pilih jadual, tanya dalam kotak, salin sel. Tiada apa yang ditulis semula.",
+        alt: "Shop.sql dalam Nota, dengan dump di sebelah jadual products dan kotak pertanyaan.",
+        caption: "Dump di kiri. Pangkalan data yang dibinanya, di kanan.",
+      },
+      {
+        id: "zen",
         name: "Mod zen",
         title: "Sedikit lebih lapang di skrin.",
         description:
@@ -73,6 +105,7 @@ const ms: Translation = {
         caption: "Pandangan yang lebih tenang bagi notepad kecil yang sama.",
       },
       {
+        id: "vim",
         name: "Gerakan Vim",
         title: "Jari anda sudah tahu jalannya.",
         description:
@@ -81,22 +114,26 @@ const ms: Translation = {
         caption: "Rentak yang biasa. Notepad Mac yang asli.",
       },
       {
+        id: "text",
         name: "Fail teks",
         title: "Seret masuk. Jadikan satu tab.",
         description:
           "Teks biasa, Markdown, kod, atau README tanpa sambungan fail. Nota membuka fail teks UTF-8 pelbagai jenis, jadi perincian kecil pun ada tempatnya.",
-        alt: "Satu fail Markdown dan satu fail teks biasa terbuka bersama sebagai tab dalam Nota.",
-        caption: ".txt · .md · .json · .csv · README · dan banyak lagi",
+        alt: "Settings.json dalam Nota, dengan tab README, notes, dan Products.csv di sebelahnya.",
+        caption:
+          "Fail tetapan, README, nota, CSV. Tetingkap kecil yang sama.",
       },
       {
+        id: "books",
         name: "Buku & PDF",
         title: "Simpan rujukan anda dekat.",
         description:
           "Buka EPUB, PDF, gambar, atau GIF dalam tabnya sendiri. Baca dan tatal bersebelahan nota anda, semuanya dalam tetingkap kecil yang sama.",
-        alt: "Sebuah EPUB terbuka dalam Nota di sebelah tab nota Markdown.",
+        alt: "Sebuah EPUB terbuka dalam Nota dengan senarai kandungannya di bar sisi, di sebelah tab Markdown dan teks.",
         caption: "Satu nota, satu buku, satu gambar. Semuanya dialu-alukan.",
       },
       {
+        id: "bookmarks",
         name: "Penanda buku",
         title: "Ada perkara yang berbaloi disimpan.",
         description:
@@ -105,6 +142,27 @@ const ms: Translation = {
         caption: "Simpan yang berguna dalam capaian.",
       },
     ],
+  },
+  fileTypes: {
+    eyebrow: "Teks. Satu halaman. Satu gambar.",
+    heading: "Seret masuk.",
+    intro:
+      "Kebanyakan fail dibuka sebagai teks. Ada yang dibaca. Beberapa mendapat panel di sebelah editor.",
+    columns: {
+      edit: {
+        title: "Sunting",
+        note: "Teks biasa kekal teks.",
+      },
+      preview: {
+        title: "Pratonton",
+        note: "Dibuka untuk dibaca, bukan ditulis.",
+      },
+      split: {
+        title: "Belah",
+        note: "Sumber di satu sisi. Pratonton di sisi satu lagi.",
+      },
+    },
+    footer: "Dan apa-apa lagi yang dinyahkod sebagai UTF-8.",
   },
   openSource: {
     eyebrow: "Terasa seperti Mac anda. Kerana memang begitu.",

@@ -40,6 +40,7 @@ const zh: Translation = {
     announcement: "{name}，第 {index} 项功能，共 {total} 项。{description}",
     features: [
       {
+        id: "tabs",
         name: "标签页常驻",
         title: "从上次停下的地方继续。",
         description:
@@ -48,6 +49,7 @@ const zh: Translation = {
         caption: "为手边未完成的事，留一处小小空间。",
       },
       {
+        id: "images",
         name: "图片内嵌",
         title: "完整画面，一并留下。",
         description:
@@ -56,6 +58,7 @@ const zh: Translation = {
         caption: "笔记里是小小的标记，旁边是完整的图。",
       },
       {
+        id: "preview",
         name: "实时预览",
         title: "写下来，随即看见。",
         description:
@@ -65,6 +68,34 @@ const zh: Translation = {
           "一边是你写下的字，一边是渐渐成形的页面。",
       },
       {
+        id: "html",
+        name: "HTML 预览",
+        title: "页面就是页面。",
+        description:
+          "打开 .html 文件，WebKit 会在编辑器旁边把它画出来。同目录的样式表和图片会一起跟上。还没存盘的修改，就是眼前的页面。",
+        alt: "Nota 中 HTML 源码与实时页面并排，旁边是 Small things 和 Field notes 标签页。",
+        caption: "一边是源码。一边是浏览器会看见的页面。",
+      },
+      {
+        id: "tables",
+        name: "CSV 表格",
+        title: "一张表，仍是文本文件。",
+        description:
+          "打开 .csv 或 .tsv，编辑器旁边会出现一张表格。排个序、翻一页、点一行就能回到文件里对应的位置。文件还是纯文本。",
+        alt: "Nota 中打开着 Products.csv，逗号分隔的源码与可排序表格并排。",
+        caption: "可以搜索的文件。可以读的表格。",
+      },
+      {
+        id: "sql",
+        name: "SQL 转储",
+        title: "跑一遍转储。读这个数据库。",
+        description:
+          ".sql 文件会在内存里交给 SQLite 执行——不会动磁盘上的文件。选一张表，在框里问一句，复制一个单元格。什么都不会写回去。",
+        alt: "Nota 中打开着 Shop.sql，转储与 products 表、查询框并排。",
+        caption: "左边是转储。右边是它建起来的数据库。",
+      },
+      {
+        id: "zen",
         name: "禅模式",
         title: "屏幕上，少一点。",
         description:
@@ -73,6 +104,7 @@ const zh: Translation = {
         caption: "还是那个小记事本，只是更安静了。",
       },
       {
+        id: "vim",
         name: "Vim 操作",
         title: "手指自己认得路。",
         description:
@@ -81,22 +113,25 @@ const zh: Translation = {
         caption: "熟悉的节奏，原生的 Mac 记事本。",
       },
       {
+        id: "text",
         name: "文本文件",
         title: "拖进来，就是一个标签页。",
         description:
           "纯文本、Markdown、代码，或是没有扩展名的 README。Nota 能打开各种 UTF-8 文本文件，让那些琐碎细节都有处安放。",
-        alt: "一个 Markdown 文件和一个纯文本文件在 Nota 中作为标签页同时打开。",
-        caption: ".txt · .md · .json · .csv · README · 以及更多",
+        alt: "Nota 中打开着 Settings.json，旁边是 README、notes 和 Products.csv 标签页。",
+        caption: "一份设置、一份 README、一则笔记、一张表。同一扇小窗。",
       },
       {
+        id: "books",
         name: "书籍与 PDF",
         title: "让参考资料就在手边。",
         description:
           "EPUB、PDF、图片或 GIF，都能各自打开一个标签页。一边看笔记一边翻阅，全在同一扇小窗里。",
-        alt: "Nota 中打开着一本 EPUB，旁边是一个 Markdown 笔记标签页。",
+        alt: "Nota 中打开着一本 EPUB，目录在侧栏，旁边是 Markdown 和文本标签页。",
         caption: "一篇笔记、一本书、一张图，都欢迎。",
       },
       {
+        id: "bookmarks",
         name: "书签",
         title: "有些东西，值得留着。",
         description:
@@ -105,6 +140,26 @@ const zh: Translation = {
         caption: "把好东西放在触手可及的地方。",
       },
     ],
+  },
+  fileTypes: {
+    eyebrow: "文本。一页。一张图。",
+    heading: "拖进来就好。",
+    intro: "多数文件按文本打开。有些用来读。少数会在编辑器旁边多一栏。",
+    columns: {
+      edit: {
+        title: "编辑",
+        note: "纯文本还是文本。",
+      },
+      preview: {
+        title: "预览",
+        note: "打开来读，不是来改。",
+      },
+      split: {
+        title: "分栏",
+        note: "一边是源码。一边是预览。",
+      },
+    },
+    footer: "以及任何能按 UTF-8 解码的东西。",
   },
   openSource: {
     eyebrow: "用起来就像你的 Mac，因为它本来就是。",

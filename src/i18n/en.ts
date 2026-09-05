@@ -37,6 +37,7 @@ const en = {
     announcement: "{name}, feature {index} of {total}. {description}",
     features: [
       {
+        id: "tabs",
         name: "Persistent tabs",
         title: "Pick up where you left off.",
         description:
@@ -45,6 +46,7 @@ const en = {
         caption: "A little place for the things you’re in the middle of.",
       },
       {
+        id: "images",
         name: "Inline images",
         title: "Keep the whole picture.",
         description:
@@ -53,6 +55,7 @@ const en = {
         caption: "Small chips in your note. The full picture beside it.",
       },
       {
+        id: "preview",
         name: "Live preview",
         title: "Write it. Then see it.",
         description:
@@ -62,6 +65,35 @@ const en = {
           "Your words on one side. Your page coming together on the other.",
       },
       {
+        id: "html",
+        name: "HTML preview",
+        title: "The page is the page.",
+        description:
+          "Open an .html file and watch WebKit draw it beside the editor. Stylesheets and pictures next to the file come along. Unsaved edits are the page.",
+        alt: "HTML source beside its live page in Nota, with Small things and Field notes tabs.",
+        caption:
+          "Source on one side. The page, as a browser would see it, on the other.",
+      },
+      {
+        id: "tables",
+        name: "CSV tables",
+        title: "A spreadsheet, still a text file.",
+        description:
+          "A .csv or .tsv opens with a grid beside the editor. Sort a column, turn a page, click a row to land on it in the file. The file stays plain text.",
+        alt: "Products.csv in Nota, with the comma-separated source beside a sortable table.",
+        caption: "The file you can search. The table you can read.",
+      },
+      {
+        id: "sql",
+        name: "SQL dumps",
+        title: "Run the dump. Read the database.",
+        description:
+          "A .sql file is run into SQLite in memory — never the file on disk. Pick a table, ask a question in the box, copy a cell. Nothing is written back.",
+        alt: "Shop.sql in Nota, with the dump beside a products table and a query box.",
+        caption: "The dump on the left. The database it builds, on the right.",
+      },
+      {
+        id: "zen",
         name: "Zen mode",
         title: "A little less on your screen.",
         description:
@@ -70,6 +102,7 @@ const en = {
         caption: "A quieter view of the same little notepad.",
       },
       {
+        id: "vim",
         name: "Vim motions",
         title: "Your fingers know the way.",
         description:
@@ -78,22 +111,25 @@ const en = {
         caption: "A familiar rhythm. A native Mac notepad.",
       },
       {
+        id: "text",
         name: "Text files",
         title: "Drop it in. Make it a tab.",
         description:
           "Plain text, Markdown, code, or a README with no extension. Nota opens UTF-8 text files of all kinds, so the little details have somewhere to land.",
-        alt: "A Markdown file and a plain text file open together as tabs in Nota.",
-        caption: ".txt · .md · .json · .csv · README · and more",
+        alt: "Settings.json in Nota, with README, notes, and Products.csv tabs beside it.",
+        caption: "A settings file, a README, a note, a table. Same little window.",
       },
       {
+        id: "books",
         name: "Books & PDFs",
         title: "Keep your references close.",
         description:
           "Open an EPUB, a PDF, a picture, or a GIF in its own tab. Read and browse alongside your notes, all in the same little window.",
-        alt: "An EPUB open in Nota beside a Markdown note tab.",
+        alt: "An EPUB open in Nota with its table of contents in the sidebar, beside Markdown and text tabs.",
         caption: "A note, a book, a picture. All welcome here.",
       },
       {
+        id: "bookmarks",
         name: "Bookmarks",
         title: "Some things are worth keeping.",
         description:
@@ -102,6 +138,27 @@ const en = {
         caption: "Keep the good stuff within reach.",
       },
     ],
+  },
+  fileTypes: {
+    eyebrow: "Text. A page. A picture.",
+    heading: "Drop it in.",
+    intro:
+      "Most files open as text. Some are read. A few get a pane beside the editor.",
+    columns: {
+      edit: {
+        title: "Edit",
+        note: "Plain text stays text.",
+      },
+      preview: {
+        title: "Preview",
+        note: "Opened to be read, not written.",
+      },
+      split: {
+        title: "Split",
+        note: "Source on one side. The preview on the other.",
+      },
+    },
+    footer: "And anything else that decodes as UTF-8.",
   },
   openSource: {
     eyebrow: "Feels like your Mac. Because it is.",

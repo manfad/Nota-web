@@ -263,9 +263,6 @@ h2 {
   text-wrap: balance;
 }
 .open-section {
-  background: #f0eee8;
-  border-top: 1px solid #e7e3da;
-  border-bottom: 1px solid #e7e3da;
   padding: 76px 0;
 }
 .open-inner {
@@ -291,13 +288,16 @@ h2 {
   margin-top: 14px;
 }
 .values-list {
-  padding-top: 2px;
+  padding: 8px 28px;
+  background: #f3f1eb;
+  border: 1px solid #e5e1d8;
+  border-radius: 22px;
 }
 .values-list > div {
   display: flex;
   gap: 24px;
-  padding: 24px 0;
-  border-bottom: 1px solid #dfdcd3;
+  padding: 22px 0;
+  border-bottom: 1px solid #e5e1d8;
 }
 .values-list > div:last-child {
   border-bottom: 0;
@@ -490,6 +490,10 @@ h2 {
   .open-inner h2 {
     font-size: 35px;
   }
+  .values-list {
+    padding: 6px 22px;
+    border-radius: 17px;
+  }
   .values-list > div {
     padding: 20px 0;
   }
@@ -528,7 +532,7 @@ h2 {
   }
 }
 /* Chinese: tight Latin tracking and line-height read badly in CJK text. */
-html:lang(zh-CN) :is(h1, h2, .wheel-tab, .feature-description h3) {
+html:lang(zh-CN) :is(h1, h2, .wheel-tab, .feature-description h3, .file-types-column h3) {
   letter-spacing: 0;
 }
 html:lang(zh-CN) :is(h1, h2) {

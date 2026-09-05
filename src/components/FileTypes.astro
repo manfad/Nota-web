@@ -1,0 +1,162 @@
+---
+import { fileTypes, type FileTypeColumn } from "../config";
+import type { Translation } from "../i18n/en";
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const columns: FileTypeColumn[] = ["edit", "preview", "split"];
+
+const columnData = columns.map((key) => ({
+  key,
+  items: [...fileTypes[key]],
+  copy: t.fileTypes.columns[key],
+  headingId: `file-types-${key}`,
+}));
+---
+
+<section
+  id="file-types"
+  class="file-types wrap"
+  aria-labelledby="file-types-heading"
+>
+  <header class="file-types-heading">
+    <p class="eyebrow">{t.fileTypes.eyebrow}</p>
+    <h2 id="file-types-heading">{t.fileTypes.heading}</h2>
+    <p class="file-types-intro">{t.fileTypes.intro}</p>
+  </header>
+
+  <div class="file-types-columns">
+    {
+      columnData.map((column) => (
+        <div class="file-types-column">
+          <h3 id={column.headingId}>{column.copy.title}</h3>
+          <p>{column.copy.note}</p>
+          <ul aria-labelledby={column.headingId}>
+            {column.items.map((item) => (
+              <li>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <p class="file-types-footer">{t.fileTypes.footer}</p>
+</section>
+
+<style>
+  .file-types {
+    padding-block: 8px 78px;
+  }
+  .file-types-heading {
+    margin-bottom: 29px;
+  }
+  .file-types-heading .eyebrow {
+    justify-content: flex-start;
+    font-size: 9px;
+    margin-bottom: 13px;
+  }
+  .file-types-heading h2 {
+    font-size: 32px;
+    letter-spacing: -1.3px;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  .file-types-intro {
+    max-width: 68ch;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .file-types-columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 32px;
+    row-gap: 28px;
+    padding: 26px 32px 28px;
+    background: #f3f1eb;
+    border: 1px solid #e5e1d8;
+    border-radius: 22px;
+  }
+  .file-types-column {
+    min-width: 0;
+    text-align: start;
+  }
+  .file-types-column:first-child ul {
+    max-width: 19rem;
+  }
+  .file-types-column:last-child ul {
+    max-width: 17.5rem;
+  }
+  .file-types-column h3 {
+    font-size: 15px;
+    font-weight: 550;
+    letter-spacing: -0.25px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .file-types-column > p {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .file-types-column ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .file-types-column span {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 13px;
+    border-radius: 999px;
+    background: #e9e5dc;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.15px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .file-types-footer {
+    margin-top: 22px;
+    font-size: 10px;
+    color: #696358;
+    text-align: start;
+    text-wrap: pretty;
+  }
+  @media (max-width: 740px) {
+    .file-types {
+      padding-block: 8px 52px;
+    }
+    .file-types-heading {
+      margin-bottom: 24px;
+    }
+    .file-types-heading h2 {
+      font-size: 27px;
+    }
+    .file-types-columns {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+      row-gap: 28px;
+      padding: 22px;
+      border-radius: 17px;
+    }
+  }
+  @media (max-width: 380px) {
+    .file-types-heading h2 {
+      font-size: 25px;
+    }
+  }
+</style>
