@@ -1,0 +1,173 @@
+---
+import Icon from "./Icon.astro";
+import type { Translation } from "../i18n/en";
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+
+const rows = [
+  { key: "homebrew", ...t.install.homebrew },
+  { key: "curl", ...t.install.curl },
+] as const;
+---
+
+<div class="install-commands">
+  {
+    rows.map((row) => (
+      <div class="install-command" role="group" aria-label={row.label}>
+        <span class="cmd-prompt" aria-hidden="true">
+          $
+        </span>
+        <div class="cmd-scroll">
+          <code>{row.command}</code>
+        </div>
+        <button
+          type="button"
+          class="copy-button"
+          data-command={row.command}
+          data-copy-label={t.install.copy}
+          data-copied-label={t.install.copied}
+          aria-live="polite"
+          hidden
+        >
+          <span class="copy-divider" aria-hidden="true" />
+          <span class="copy-icon-copy">
+            <Icon name="copy" size={14} />
+          </span>
+          <span class="copy-icon-check" hidden>
+            <Icon name="check" size={14} />
+          </span>
+          <span class="copy-text">{t.install.copy}</span>
+        </button>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>(".copy-button")
+    .forEach((button) => {
+      button.hidden = false;
+      const command = button.dataset.command ?? "";
+      const copyLabel = button.dataset.copyLabel ?? "";
+      const copiedLabel = button.dataset.copiedLabel ?? "";
+      const copyIcon = button.querySelector<HTMLElement>(".copy-icon-copy")!;
+      const checkIcon =
+        button.querySelector<HTMLElement>(".copy-icon-check")!;
+      const label = button.querySelector<HTMLElement>(".copy-text")!;
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(command);
+        } catch {
+          return;
+        }
+        clearTimeout(resetTimer);
+        copyIcon.hidden = true;
+        checkIcon.hidden = false;
+        button.classList.add("is-copied");
+        label.textContent = copiedLabel;
+        resetTimer = setTimeout(() => {
+          copyIcon.hidden = false;
+          checkIcon.hidden = true;
+          button.classList.remove("is-copied");
+          label.textContent = copyLabel;
+        }, 1500);
+      });
+    });
+</script>
+
+<style>
+  .install-commands {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 480px;
+    margin: 28px auto 0;
+  }
+  .install-command {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding-inline: 14px 4px;
+    background: #1c1c1f;
+    border: 1px solid #ffffff1a;
+    border-radius: 10px;
+    text-align: left;
+  }
+  .cmd-prompt {
+    flex-shrink: 0;
+    font-family: ui-monospace, monospace;
+    font-size: 14px;
+    color: #ffffff54;
+  }
+  .cmd-scroll {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cmd-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .cmd-scroll code {
+    display: block;
+    width: max-content;
+    font-family: ui-monospace, monospace;
+    font-size: 14px;
+    color: #f4f3ef;
+    white-space: pre;
+  }
+  .copy-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    align-self: stretch;
+    background: transparent;
+    border: none;
+    padding-inline: 10px 14px;
+    color: #ffffffbf;
+    font-size: 12px;
+    font-weight: 550;
+  }
+  .copy-button:hover {
+    color: #fff;
+  }
+  .copy-divider {
+    align-self: stretch;
+    width: 1px;
+    margin-block: 10px;
+    background: #ffffff1f;
+  }
+  .copy-icon-check {
+    color: #34d399;
+  }
+  .copy-button.is-copied .copy-text {
+    color: #34d399;
+  }
+  @media (max-width: 600px) {
+    .copy-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .copy-button {
+      transition: color 150ms;
+    }
+  }
+</style>

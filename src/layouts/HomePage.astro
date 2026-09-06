@@ -6,6 +6,7 @@ import { site } from "../config";
 import appIcon from "../assets/icon.png";
 import hero from "../assets/nota-split.png";
 import FeatureShowcase from "../components/FeatureShowcase.astro";
+import InstallCommands from "../components/InstallCommands.astro";
 import FileTypes from "../components/FileTypes.astro";
 import { getTranslation } from "../i18n";
 import {
@@ -120,6 +121,10 @@ const hrefFor = (code: Locale) =>
             >{t.hero.viewSource} <Icon name="arrow" size={16} /></a
           >
         </div>
+
+        <InstallCommands t={t} />
+        <p class="gatekeeper-note">{t.install.gatekeeperNote}</p>
+
         <p class="compatibility">
           {t.hero.compatibility}
           <span>·</span> {t.hero.noAccount}

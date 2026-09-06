@@ -37,6 +37,11 @@ and absolute social image URLs. No runtime server or environment variables are n
   `tables`, `sql`, `zen`, `vim`, `text`, `books`, `bookmarks`).
 - `src/components/FileTypes.astro`: Edit / Preview / Split columns listing every
   supported extension as a static wrap of pills.
+- `src/components/InstallCommands.astro`: the two dark terminal-style command
+  boxes in the hero (Homebrew cask install, and the `curl | sh` one-liner),
+  each with a copy-to-clipboard button (progressive enhancement; the command
+  stays selectable without JS, and long commands scroll horizontally inside
+  their own box).
 - `src/styles/global.css`: responsive styling, local font, and reduced motion.
 - `src/assets/`: real Nota window captures and the existing app icon. Named
   shots include `nota-editor.png`, `nota-images.png`, `nota-split.png`,
@@ -46,6 +51,11 @@ and absolute social image URLs. No runtime server or environment variables are n
 - `public/`: favicons, locally hosted DM Sans (SIL Open Font License included),
   and the 1200 × 630 social card. `scripts/social.html` is its editable source;
   render it in a browser at 1200 × 630 and capture it to `public/social.png`.
+  `install.sh` is served as-is at `/install.sh` for the curl one-liner: it
+  finds the latest `Nota-<version>.zip` on GitHub Releases via the GitHub API,
+  downloads and extracts it with `ditto`, and installs it to `/Applications`
+  (or `~/Applications`, or `$NOTA_INSTALL_DIR`), quitting an already-running
+  Nota first if needed.
 
 Screenshots were captured from a copy of `/Applications/Nota.app`, using the
 isolated bundle identifier `com.manfad.nota.promo` and `NOTA_SUPPORT_DIR` pointing
@@ -63,10 +73,14 @@ the user's real session. Capture only the app window with `screencapture -x -o -
 
 ## Before publishing
 
-The primary CTA links to https://github.com/manfad/Nota/releases. At implementation
-time there were no releases; publish a downloadable macOS release before promoting
-the download CTA. App packaging, signing, releases, and hosting are separate tasks.
+The primary CTA links to https://github.com/manfad/Nota/releases, and the hero's
+Homebrew and curl commands expect a `manfad/homebrew-nota` tap with a `nota`
+cask, and GitHub releases carrying a `Nota-<version>.zip` asset. Releases now
+exist; if the tap or a release asset ever moves, update `src/config.ts` and
+`public/install.sh` together.
 
 Check 320px, 390px, 768px, and desktop layouts; every feature tab; keyboard
 navigation; file-types rotation, pause, offscreen, and reduced-motion behavior;
-the no-JavaScript fallbacks; links; image loading; and the production build.
+the no-JavaScript fallbacks; the hero's copy buttons (icon-only on narrow
+screens, "Copied" swap, no-JavaScript fallback); links; image loading; and the
+production build.
