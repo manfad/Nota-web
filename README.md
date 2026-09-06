@@ -37,11 +37,13 @@ and absolute social image URLs. No runtime server or environment variables are n
   `tables`, `sql`, `zen`, `vim`, `text`, `books`, `bookmarks`).
 - `src/components/FileTypes.astro`: Edit / Preview / Split columns listing every
   supported extension as a static wrap of pills.
-- `src/components/InstallCommands.astro`: the two dark terminal-style command
-  boxes in the hero (Homebrew cask install, and the `curl | sh` one-liner),
-  each with a copy-to-clipboard button (progressive enhancement; the command
-  stays selectable without JS, and long commands scroll horizontally inside
-  their own box).
+- `src/components/InstallCommands.astro`: the single light-card install box in
+  the hero, with a `brew`/`curl` tab switcher (remembered per viewer in
+  `localStorage`), a command row with a copy-to-clipboard button (progressive
+  enhancement; the command stays selectable without JS, and long commands
+  scroll horizontally inside their own box), and an info icon that opens a
+  small popover with the Gatekeeper note. Without JS, both commands show
+  stacked with no tabs and the copy buttons hidden.
 - `src/styles/global.css`: responsive styling, local font, and reduced motion.
 - `src/assets/`: real Nota window captures and the existing app icon. Named
   shots include `nota-editor.png`, `nota-images.png`, `nota-split.png`,
@@ -81,6 +83,8 @@ exist; if the tap or a release asset ever moves, update `src/config.ts` and
 
 Check 320px, 390px, 768px, and desktop layouts; every feature tab; keyboard
 navigation; file-types rotation, pause, offscreen, and reduced-motion behavior;
-the no-JavaScript fallbacks; the hero's copy buttons (icon-only on narrow
-screens, "Copied" swap, no-JavaScript fallback); links; image loading; and the
-production build.
+the no-JavaScript fallbacks; the hero install box (brew/curl tab switching
+with arrow keys, the remembered tab, the copy buttons' icon-only state on
+narrow screens and "Copied" swap, the info popover on hover/focus/click and
+Escape/click-outside to close, and the no-JS fallback); links; image loading;
+and the production build.

@@ -144,17 +144,13 @@ const ms: Translation = {
     ],
   },
   install: {
-    homebrew: {
-      label: "Homebrew",
-      command: "brew install --cask manfad/nota/nota",
-    },
-    curl: {
-      label: "curl",
-      command:
-        "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
-    },
+    tabsLabel: "Kaedah pemasangan",
+    homebrewCommand: "brew install --cask manfad/nota/nota",
+    curlCommand:
+      "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
     copy: "Salin",
     copied: "Disalin",
+    aboutGatekeeper: "Tentang Gatekeeper",
     gatekeeperNote:
       "Nota belum disahkan (notarized) lagi — benarkan di Tetapan Sistem › Privasi & Keselamatan jika macOS menyekatnya.",
   },

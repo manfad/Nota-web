@@ -140,17 +140,13 @@ const en = {
     ],
   },
   install: {
-    homebrew: {
-      label: "Homebrew",
-      command: "brew install --cask manfad/nota/nota",
-    },
-    curl: {
-      label: "curl",
-      command:
-        "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
-    },
+    tabsLabel: "Install method",
+    homebrewCommand: "brew install --cask manfad/nota/nota",
+    curlCommand:
+      "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
     copy: "Copy",
     copied: "Copied",
+    aboutGatekeeper: "About Gatekeeper",
     gatekeeperNote:
       "Nota isn't notarized yet — allow it in System Settings › Privacy & Security if macOS blocks it.",
   },

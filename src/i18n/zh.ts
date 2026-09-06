@@ -142,17 +142,13 @@ const zh: Translation = {
     ],
   },
   install: {
-    homebrew: {
-      label: "Homebrew",
-      command: "brew install --cask manfad/nota/nota",
-    },
-    curl: {
-      label: "curl",
-      command:
-        "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
-    },
+    tabsLabel: "安装方式",
+    homebrewCommand: "brew install --cask manfad/nota/nota",
+    curlCommand:
+      "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
     copy: "复制",
     copied: "已复制",
+    aboutGatekeeper: "关于 Gatekeeper",
     gatekeeperNote:
       "Nota 还没有经过公证——如果 macOS 拦截，在系统设置 › 隐私与安全性中允许即可。",
   },

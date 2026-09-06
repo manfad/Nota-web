@@ -8,46 +8,161 @@ interface Props {
 
 const { t } = Astro.props;
 
+/** Tab captions are literal, not translated: "brew" and "curl" name the tools. */
 const rows = [
-  { key: "homebrew", ...t.install.homebrew },
-  { key: "curl", ...t.install.curl },
+  { key: "brew", command: t.install.homebrewCommand },
+  { key: "curl", command: t.install.curlCommand },
 ] as const;
 ---
 
-<div class="install-commands">
-  {
-    rows.map((row) => (
-      <div class="install-command" role="group" aria-label={row.label}>
-        <span class="cmd-prompt" aria-hidden="true">
-          $
-        </span>
-        <div class="cmd-scroll">
-          <code>{row.command}</code>
-        </div>
-        <button
-          type="button"
-          class="copy-button"
-          data-command={row.command}
-          data-copy-label={t.install.copy}
-          data-copied-label={t.install.copied}
-          aria-live="polite"
-          hidden
-        >
-          <span class="copy-divider" aria-hidden="true" />
-          <span class="copy-icon-copy">
-            <Icon name="copy" size={14} />
-          </span>
-          <span class="copy-icon-check" hidden>
-            <Icon name="check" size={14} />
-          </span>
-          <span class="copy-text">{t.install.copy}</span>
-        </button>
+<div class="install-box" data-install>
+  <div class="install-header">
+    <span class="info-wrap">
+      <button
+        type="button"
+        class="info-button"
+        aria-describedby="install-gatekeeper-popover"
+        aria-label={t.install.aboutGatekeeper}
+      >
+        <Icon name="info" size={16} />
+      </button>
+      <div class="install-popover" id="install-gatekeeper-popover" role="tooltip">
+        {t.install.gatekeeperNote}
       </div>
-    ))
-  }
+    </span>
+
+    <div class="install-tabs" role="tablist" aria-label={t.install.tabsLabel}>
+      {
+        rows.map((row, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`install-tab-${row.key}`}
+            aria-controls={`install-panel-${row.key}`}
+            aria-selected={index === 0}
+            tabindex={index === 0 ? 0 : -1}
+            class="install-tab"
+            data-tab={row.key}
+          >
+            {row.key}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="install-panels">
+    {
+      rows.map((row) => (
+        <div
+          class="install-panel"
+          id={`install-panel-${row.key}`}
+          role="tabpanel"
+          aria-labelledby={`install-tab-${row.key}`}
+          data-panel={row.key}
+        >
+          <span class="cmd-prompt" aria-hidden="true">
+            $
+          </span>
+          <div class="cmd-scroll">
+            <code>{row.command}</code>
+          </div>
+          <button
+            type="button"
+            class="copy-button"
+            data-command={row.command}
+            data-copy-label={t.install.copy}
+            data-copied-label={t.install.copied}
+            aria-live="polite"
+            hidden
+          >
+            <span class="copy-divider" aria-hidden="true" />
+            <span class="copy-icon-copy">
+              <Icon name="copy" size={14} />
+            </span>
+            <span class="copy-icon-check" hidden>
+              <Icon name="check" size={14} />
+            </span>
+            <span class="copy-text">{t.install.copy}</span>
+          </button>
+        </div>
+      ))
+    }
+  </div>
 </div>
 
+<noscript>
+  <style is:inline>
+    .install-tabs {
+      display: none;
+    }
+  </style>
+</noscript>
+
 <script>
+  const STORAGE_KEY = "nota-install-tab";
+
+  const box = document.querySelector<HTMLElement>("[data-install]");
+  if (box) {
+    const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...box.querySelectorAll<HTMLElement>("[data-panel]")];
+
+    function select(key: string) {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.tab === key;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== key;
+      });
+    }
+
+    let initial = "brew";
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "brew" || saved === "curl") initial = saved;
+    } catch {
+      // Storage may be unavailable (private mode); fall back to the default.
+    }
+    select(initial);
+
+    function activate(key: string) {
+      select(key);
+      try {
+        localStorage.setItem(STORAGE_KEY, key);
+      } catch {
+        // Ignore write failures; the tab still switches for this visit.
+      }
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => activate(tab.dataset.tab!));
+      tab.addEventListener("keydown", (event) => {
+        let next: number | null = null;
+        switch (event.key) {
+          case "ArrowRight":
+            next = (index + 1) % tabs.length;
+            break;
+          case "ArrowLeft":
+            next = (index - 1 + tabs.length) % tabs.length;
+            break;
+          case "Home":
+            next = 0;
+            break;
+          case "End":
+            next = tabs.length - 1;
+            break;
+          default:
+            return;
+        }
+        event.preventDefault();
+        activate(tabs[next].dataset.tab!);
+        tabs[next].focus();
+      });
+    });
+  }
+
   document
     .querySelectorAll<HTMLButtonElement>(".copy-button")
     .forEach((button) => {
@@ -80,32 +195,136 @@ const rows = [
         }, 1500);
       });
     });
+
+  const infoWraps = [...document.querySelectorAll<HTMLElement>(".info-wrap")];
+  infoWraps.forEach((wrap) => {
+    const button = wrap.querySelector<HTMLButtonElement>(".info-button")!;
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      wrap.classList.toggle("is-open");
+    });
+  });
+  document.addEventListener("click", (event) => {
+    infoWraps.forEach((wrap) => {
+      if (!wrap.contains(event.target as Node)) {
+        wrap.classList.remove("is-open");
+      }
+    });
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      infoWraps.forEach((wrap) => wrap.classList.remove("is-open"));
+    }
+  });
 </script>
 
 <style>
-  .install-commands {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .install-box {
     max-width: 480px;
     margin: 28px auto 0;
+    padding: 12px 14px 14px;
+    background: #f3f1eb;
+    border: 1px solid #e5e1d8;
+    border-radius: 14px;
+    text-align: left;
   }
-  .install-command {
+  .install-header {
     display: flex;
     align-items: center;
     gap: 10px;
-    height: 44px;
-    padding-inline: 14px 4px;
-    background: #1c1c1f;
-    border: 1px solid #ffffff1a;
+    margin-bottom: 10px;
+  }
+  .info-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+  .info-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--muted);
+  }
+  .info-button:hover {
+    color: var(--accent);
+  }
+  .install-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 5;
+    width: max-content;
+    max-width: 280px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
     border-radius: 10px;
-    text-align: left;
+    box-shadow:
+      0 8px 24px #00000014,
+      0 2px 6px #0000000f;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+    text-wrap: pretty;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+  }
+  .info-wrap:hover .install-popover,
+  .info-wrap:focus-within .install-popover,
+  .info-wrap.is-open .install-popover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+  .install-tabs {
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    background: #e9e5dc;
+    border-radius: 8px;
+  }
+  .install-tab {
+    padding: 5px 13px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 550;
+    color: var(--muted);
+  }
+  .install-tab[aria-selected="true"] {
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 1px 2px #0000001a;
+  }
+  .install-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .install-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding-inline: 14px 4px;
+    background: #e9e5dc;
+    border-radius: 9px;
   }
   .cmd-prompt {
     flex-shrink: 0;
     font-family: ui-monospace, monospace;
     font-size: 14px;
-    color: #ffffff54;
+    color: var(--muted);
   }
   .cmd-scroll {
     flex: 1;
@@ -121,7 +340,7 @@ const rows = [
     width: max-content;
     font-family: ui-monospace, monospace;
     font-size: 14px;
-    color: #f4f3ef;
+    color: var(--ink);
     white-space: pre;
   }
   .copy-button {
@@ -132,25 +351,23 @@ const rows = [
     align-self: stretch;
     background: transparent;
     border: none;
-    padding-inline: 10px 14px;
-    color: #ffffffbf;
+    padding-inline: 10px 12px;
+    color: var(--muted);
     font-size: 12px;
     font-weight: 550;
   }
   .copy-button:hover {
-    color: #fff;
+    color: var(--accent);
   }
   .copy-divider {
     align-self: stretch;
     width: 1px;
-    margin-block: 10px;
-    background: #ffffff1f;
+    margin-block: 9px;
+    background: #d9d4c8;
   }
-  .copy-icon-check {
-    color: #34d399;
-  }
+  .copy-icon-check,
   .copy-button.is-copied .copy-text {
-    color: #34d399;
+    color: var(--accent);
   }
   @media (max-width: 600px) {
     .copy-text {
@@ -168,6 +385,12 @@ const rows = [
   @media (prefers-reduced-motion: no-preference) {
     .copy-button {
       transition: color 150ms;
+    }
+    .install-popover {
+      transition:
+        opacity 150ms,
+        transform 150ms,
+        visibility 150ms;
     }
   }
 </style>
