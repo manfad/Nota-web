@@ -134,7 +134,7 @@ const en = {
         title: "Some things are worth keeping.",
         description:
           "Bookmark the files you reach for often, and open them again whenever you need them. Your next read or reference is never far away.",
-        alt: "Bookmarked Markdown and text tabs in Nota, marked with small bookmark badges.",
+        alt: "Nota's bookmarks panel floating over a notepad window, listing four saved files with their file icons.",
         caption: "Keep the good stuff within reach.",
       },
     ],
@@ -206,7 +206,7 @@ const en = {
   footer: {
     home: "Nota home",
     tagline: "A little notepad for your Mac.",
-    link: "Made in the open",
+    link: "View on GitHub",
   },
 };
 

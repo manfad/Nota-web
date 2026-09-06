@@ -138,7 +138,7 @@ const ms: Translation = {
         title: "Ada perkara yang berbaloi disimpan.",
         description:
           "Tandakan fail yang kerap anda buka, dan buka semula bila-bila anda perlukannya. Bacaan atau rujukan seterusnya sentiasa dekat.",
-        alt: "Tab Markdown dan teks yang ditanda dalam Nota, dengan lencana penanda buku yang kecil.",
+        alt: "Panel penanda buku Nota terapung di atas tetingkap nota, menyenaraikan empat fail tersimpan dengan ikon failnya.",
         caption: "Simpan yang berguna dalam capaian.",
       },
     ],
@@ -213,7 +213,7 @@ const ms: Translation = {
   footer: {
     home: "Laman utama Nota",
     tagline: "Notepad kecil untuk Mac anda.",
-    link: "Dibina secara terbuka",
+    link: "Lihat di GitHub",
   },
 };
 

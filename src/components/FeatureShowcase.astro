@@ -11,6 +11,7 @@ import quiet from "../assets/nota-quiet.png";
 import vim from "../assets/nota-vim.png";
 import text from "../assets/nota-text.png";
 import book from "../assets/nota-book.png";
+import bookmarks from "../assets/nota-bookmarks.png";
 import type { Translation } from "../i18n/en";
 
 interface Props {
@@ -33,7 +34,7 @@ const featureImages: Record<FeatureId, ImageMetadata> = {
   vim,
   text,
   books: book,
-  bookmarks: editor,
+  bookmarks,
 };
 
 const features = t.showcase.features.map((feature) => ({

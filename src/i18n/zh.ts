@@ -136,7 +136,7 @@ const zh: Translation = {
         title: "有些东西，值得留着。",
         description:
           "把常翻的文件加上书签，需要时随时再打开。下一次要读的、要查的，都离你不远。",
-        alt: "Nota 中已加书签的 Markdown 和文本标签页，带有小小的书签标记。",
+        alt: "Nota 的书签面板浮在记事本窗口之上，列出四个已加书签的文件，各带文件图标。",
         caption: "把好东西放在触手可及的地方。",
       },
     ],
@@ -207,7 +207,7 @@ const zh: Translation = {
   footer: {
     home: "Nota 首页",
     tagline: "一个属于你 Mac 的小记事本。",
-    link: "开源打造",
+    link: "在 GitHub 上查看",
   },
 };
 

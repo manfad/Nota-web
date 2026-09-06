@@ -18,7 +18,6 @@ export const fileTypes = {
     ".swift",
     ".css",
     "README",
-    ".gitignore",
   ],
   preview: [
     ".pdf",

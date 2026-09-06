@@ -17,20 +17,6 @@ const rows = [
 
 <div class="install-box" data-install>
   <div class="install-header">
-    <span class="info-wrap">
-      <button
-        type="button"
-        class="info-button"
-        aria-describedby="install-gatekeeper-popover"
-        aria-label={t.install.aboutGatekeeper}
-      >
-        <Icon name="info" size={16} />
-      </button>
-      <div class="install-popover" id="install-gatekeeper-popover" role="tooltip">
-        {t.install.gatekeeperNote}
-      </div>
-    </span>
-
     <div class="install-tabs" role="tablist" aria-label={t.install.tabsLabel}>
       {
         rows.map((row, index) => (
@@ -49,6 +35,20 @@ const rows = [
         ))
       }
     </div>
+
+    <span class="info-wrap">
+      <button
+        type="button"
+        class="info-button"
+        aria-describedby="install-gatekeeper-popover"
+        aria-label={t.install.aboutGatekeeper}
+      >
+        <Icon name="info" size={16} />
+      </button>
+      <div class="install-popover" id="install-gatekeeper-popover" role="tooltip">
+        {t.install.gatekeeperNote}
+      </div>
+    </span>
   </div>
 
   <div class="install-panels">
