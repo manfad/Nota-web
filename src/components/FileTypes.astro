@@ -42,11 +42,13 @@ const columnData = columns.map((key) => ({
               </li>
             ))}
           </ul>
+          {column.key === "edit" && (
+            <p class="file-types-footer">{t.fileTypes.footer}</p>
+          )}
         </div>
       ))
     }
   </div>
-  <p class="file-types-footer">{t.fileTypes.footer}</p>
 </section>
 
 <style>
@@ -129,8 +131,8 @@ const columnData = columns.map((key) => ({
     line-height: 1.3;
     white-space: nowrap;
   }
-  .file-types-footer {
-    margin-top: 22px;
+  .file-types-column .file-types-footer {
+    margin: 14px 0 0;
     font-size: 10px;
     color: #696358;
     text-align: start;
