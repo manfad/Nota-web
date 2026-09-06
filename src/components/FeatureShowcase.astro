@@ -1,40 +1,32 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import editor from "../assets/nota-editor.png";
-import images from "../assets/nota-images.png";
-import preview from "../assets/nota-split.png";
-import html from "../assets/nota-html.png";
-import tables from "../assets/nota-csv.png";
-import sql from "../assets/nota-sql.png";
-import quiet from "../assets/nota-quiet.png";
-import vim from "../assets/nota-vim.png";
-import text from "../assets/nota-text.png";
-import book from "../assets/nota-book.png";
-import bookmarks from "../assets/nota-bookmarks.png";
+import { getScreenshot } from "../screenshots";
+import type { Locale } from "../i18n/locales";
 import type { Translation } from "../i18n/en";
 
 interface Props {
   t: Translation;
+  locale: Locale;
 }
 
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 
 type FeatureId = Translation["showcase"]["features"][number]["id"];
 
 /** Screenshot for each feature, keyed so copy order cannot drift. */
 const featureImages: Record<FeatureId, ImageMetadata> = {
-  tabs: editor,
-  images,
-  preview,
-  html,
-  tables,
-  sql,
-  zen: quiet,
-  vim,
-  text,
-  books: book,
-  bookmarks,
+  tabs: getScreenshot(locale, "editor"),
+  images: getScreenshot(locale, "images"),
+  preview: getScreenshot(locale, "split"),
+  html: getScreenshot(locale, "html"),
+  tables: getScreenshot(locale, "csv"),
+  sql: getScreenshot(locale, "sql"),
+  zen: getScreenshot(locale, "quiet"),
+  vim: getScreenshot(locale, "vim"),
+  text: getScreenshot(locale, "text"),
+  books: getScreenshot(locale, "book"),
+  bookmarks: getScreenshot(locale, "bookmarks"),
 };
 
 const features = t.showcase.features.map((feature) => ({

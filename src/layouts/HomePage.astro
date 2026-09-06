@@ -4,7 +4,7 @@ import Icon from "../components/Icon.astro";
 import LanguagePicker from "../components/LanguagePicker.astro";
 import { site } from "../config";
 import appIcon from "../assets/icon.png";
-import hero from "../assets/nota-split.png";
+import { getScreenshot } from "../screenshots";
 import FeatureShowcase from "../components/FeatureShowcase.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 import FileTypes from "../components/FileTypes.astro";
@@ -25,6 +25,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = getTranslation(locale);
 const { htmlLang } = getLocale(locale);
+const hero = getScreenshot(locale, "split");
 
 const socialImage = Astro.site
   ? new URL("/social.png", Astro.site).href
@@ -145,7 +146,7 @@ const hrefFor = (code: Locale) =>
         </figure>
       </section>
 
-      <FeatureShowcase t={t} />
+      <FeatureShowcase t={t} locale={locale} />
 
       <FileTypes t={t} />
 
