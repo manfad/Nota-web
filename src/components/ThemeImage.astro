@@ -1,0 +1,71 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+/**
+ * One screenshot in two appearances. The dark capture is offered through a
+ * `<source>` gated on `prefers-color-scheme`, so exactly one variant is
+ * downloaded and the right one shows with no JavaScript. The theme toggle
+ * rewrites `media` on every `[data-theme-source]` when a viewer picks a
+ * theme explicitly: `all` for dark, `not all` for light, and back to the
+ * media query when they return to following the system.
+ */
+interface Props {
+  light: ImageMetadata;
+  dark: ImageMetadata;
+  alt: string;
+  widths: number[];
+  sizes: string;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
+  class?: string;
+}
+
+const {
+  light,
+  dark,
+  alt,
+  widths,
+  sizes,
+  loading = "lazy",
+  fetchpriority,
+  class: className,
+} = Astro.props;
+
+const width = Math.min(Math.max(...widths), light.width);
+const height = Math.round((width * light.height) / light.width);
+
+const [lightImage, darkImage] = await Promise.all([
+  getImage({ src: light, widths, format: "webp" }),
+  getImage({ src: dark, widths, format: "webp" }),
+]);
+---
+
+<picture>
+  <source
+    data-theme-source
+    srcset={darkImage.srcSet.attribute}
+    sizes={sizes}
+    type="image/webp"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src={lightImage.src}
+    srcset={lightImage.srcSet.attribute}
+    sizes={sizes}
+    width={width}
+    height={height}
+    alt={alt}
+    class={className}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+</picture>
+
+<style>
+  /* The <img> stays the layout box, so callers style it directly. */
+  picture {
+    display: contents;
+  }
+</style>

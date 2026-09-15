@@ -223,8 +223,8 @@ const rows = [
     max-width: 480px;
     margin: 28px auto 0;
     padding: 12px 14px 14px;
-    background: #f3f1eb;
-    border: 1px solid #e5e1d8;
+    background: var(--card);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     text-align: left;
   }
@@ -261,12 +261,10 @@ const rows = [
     width: max-content;
     max-width: 280px;
     padding: 12px 14px;
-    background: var(--paper);
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
-    box-shadow:
-      0 8px 24px #00000014,
-      0 2px 6px #0000000f;
+    box-shadow: var(--shadow-popover);
     font-size: 12px;
     line-height: 1.6;
     color: var(--muted);
@@ -288,7 +286,7 @@ const rows = [
     display: flex;
     gap: 3px;
     padding: 3px;
-    background: #e9e5dc;
+    background: var(--pill);
     border-radius: 8px;
   }
   .install-tab {
@@ -302,9 +300,9 @@ const rows = [
     color: var(--muted);
   }
   .install-tab[aria-selected="true"] {
-    background: var(--paper);
+    background: var(--surface);
     color: var(--ink);
-    box-shadow: 0 1px 2px #0000001a;
+    box-shadow: var(--shadow-tab);
   }
   .install-panels {
     display: flex;
@@ -317,7 +315,7 @@ const rows = [
     gap: 10px;
     height: 42px;
     padding-inline: 14px 4px;
-    background: #e9e5dc;
+    background: var(--pill);
     border-radius: 9px;
   }
   .cmd-prompt {
@@ -363,11 +361,23 @@ const rows = [
     align-self: stretch;
     width: 1px;
     margin-block: 9px;
-    background: #d9d4c8;
+    background: var(--divider);
   }
   .copy-icon-check,
   .copy-button.is-copied .copy-text {
     color: var(--accent);
+  }
+  @media (max-width: 520px) {
+    /*
+     * The popover is laid out even while hidden, so anchoring it to the info
+     * button's left edge would push the page wide enough to scroll sideways.
+     * Centre it on the button and cap it to the viewport instead.
+     */
+    .install-popover {
+      left: 50%;
+      translate: -50%;
+      max-width: min(280px, calc(100vw - 44px));
+    }
   }
   @media (max-width: 600px) {
     .copy-text {

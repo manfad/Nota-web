@@ -2,9 +2,10 @@ import type { ImageMetadata } from "astro";
 import type { Locale } from "./i18n/locales";
 
 /**
- * Per-locale screenshots. To localize a screenshot, drop a file with the
- * same name into `src/assets/screenshots/<locale>/`; any locale missing a
- * given file falls back to the English version.
+ * Per-locale screenshots. Every feature ships a light and a dark capture:
+ * `nota-<name>.png` and `nota-<name>-dark.png`. To localize a screenshot,
+ * drop a file with the same name into `src/assets/screenshots/<locale>/`;
+ * any locale missing a given file falls back to the English version.
  */
 const screenshots = import.meta.glob<ImageMetadata>(
   "./assets/screenshots/*/*.png",
@@ -12,28 +13,51 @@ const screenshots = import.meta.glob<ImageMetadata>(
 );
 
 export type ScreenshotName =
-  | "book"
-  | "images"
-  | "csv"
-  | "quiet"
-  | "sql"
-  | "editor"
-  | "bookmarks"
-  | "reading"
-  | "split"
+  | "notes"
+  | "markdown"
   | "html"
-  | "vim"
-  | "text";
+  | "latex"
+  | "json"
+  | "xml"
+  | "csv"
+  | "sql"
+  | "images"
+  | "pdf"
+  | "epub"
+  | "picture"
+  | "bookmarks"
+  | "zen";
+
+export type ScreenshotVariant = "light" | "dark";
+
+/** Both appearances of one screenshot, ready for `ThemeImage`. */
+export interface ScreenshotPair {
+  light: ImageMetadata;
+  dark: ImageMetadata;
+}
 
 export function getScreenshot(
   locale: Locale,
   name: ScreenshotName,
+  variant: ScreenshotVariant = "light",
 ): ImageMetadata {
-  const localized = screenshots[`./assets/screenshots/${locale}/nota-${name}.png`];
+  const file = variant === "dark" ? `nota-${name}-dark.png` : `nota-${name}.png`;
+
+  const localized = screenshots[`./assets/screenshots/${locale}/${file}`];
   if (localized) return localized;
 
-  const fallback = screenshots[`./assets/screenshots/en/nota-${name}.png`];
+  const fallback = screenshots[`./assets/screenshots/en/${file}`];
   if (fallback) return fallback;
 
-  throw new Error(`Missing screenshot "nota-${name}.png" (no ${locale} or en fallback)`);
+  throw new Error(`Missing screenshot "${file}" (no ${locale} or en fallback)`);
+}
+
+export function getScreenshotPair(
+  locale: Locale,
+  name: ScreenshotName,
+): ScreenshotPair {
+  return {
+    light: getScreenshot(locale, name, "light"),
+    dark: getScreenshot(locale, name, "dark"),
+  };
 }

@@ -5,7 +5,7 @@ const ms: Translation = {
   meta: {
     title: "Nota — Notepad kecil. Ruang untuk semuanya.",
     description:
-      "Notepad Mac asli untuk buah fikiran pantas, fail teks, dan segala yang anda baca. Tab yang kekal, imej dalam nota, gerakan Vim, dan sedikit ketenangan. Sumber terbuka. Tiada log masuk diperlukan.",
+      "Notepad Mac asli untuk buah fikiran pantas, fail teks, dan segala yang anda baca. Ia memberi pratonton Markdown dan LaTeX, memaparkan JSON dan XML sebagai pokok, serta membuka CSV, SQL, PDF, buku, dan gambar. Sumber terbuka, dan tiada akaun diperlukan.",
     ogImageAlt: "Nota. Notepad kecil. Ruang untuk semuanya.",
   },
   skipLink: "Langkau ke kandungan",
@@ -17,20 +17,24 @@ const ms: Translation = {
     github: "GitHub",
     download: "Dapatkan Nota",
     language: "Tukar bahasa",
+    theme: {
+      toDark: "Tukar ke mod gelap",
+      toLight: "Tukar ke mod cerah",
+    },
   },
   hero: {
     eyebrow: "Aplikasi kecil untuk fikiran harian anda",
     heading: ["Notepad kecil.", "Ruang untuk semuanya."] as [string, string],
     description: [
       "Notepad Mac asli untuk buah fikiran pantas, fail teks, dan",
-      "segala yang anda baca. Buka satu tab. Buat macam rumah sendiri.",
+      "segala yang anda baca. Buka satu tab dan buat macam rumah sendiri.",
     ] as [string, string],
     download: "Muat turun untuk macOS",
     viewSource: "Lihat kod sumber",
     compatibility: "Untuk macOS 14 dan ke atas",
     noAccount: "Tiada akaun diperlukan",
     screenshotAlt:
-      "Nota memaparkan nota Markdown dalam paparan belah langsung, dengan tab Untitled, Field notes, dan EPUB di sebelahnya.",
+      "Nota dengan fail Markdown terbuka di sebelah pratontonnya, menunjukkan sebuah jadual dan dua rajah Mermaid.",
   },
   showcase: {
     eyebrow: "Aplikasi kecil. Perincian yang teliti.",
@@ -40,106 +44,135 @@ const ms: Translation = {
     announcement: "{name}, ciri {index} daripada {total}. {description}",
     features: [
       {
-        id: "tabs",
-        name: "Tab yang kekal",
-        title: "Sambung di tempat anda berhenti.",
+        id: "notes",
+        name: "Catatan",
+        title: "Ia bermula sebagai notepad.",
         description:
-          "Mula dengan tab Untitled yang baharu. Tab yang terbuka dan nota tersimpan sementara akan kembali apabila anda buka Nota semula, termasuk yang belum anda simpan ke fail.",
-        alt: "Editor Nota dengan tab Small things, Untitled, dan Field notes terbuka.",
-        caption: "Ruang kecil untuk perkara yang belum anda selesaikan.",
+          "Buka Nota dan satu tab Untitled yang baharu sudah menunggu. Nombor baris di sebelah kiri, dan bar status mengira perkataan anda sambil anda menaip.",
+        alt: "Satu tab Untitled dalam Nota dengan “This is Nota App” ditaip pada baris pertama.",
+        caption: "Tiada apa-apa untuk disediakan sebelum anda mula menaip.",
       },
       {
-        id: "images",
-        name: "Imej dalam nota",
-        title: "Simpan gambaran penuhnya.",
+        id: "markdown",
+        name: "Markdown",
+        title: "Lihat Markdown anda sambil menulisnya.",
         description:
-          "Tampal tangkap layar atau seret masuk gambar. Cip imej yang kemas duduk bersama tulisan anda, dan galeri menyimpan gambar penuhnya betul-betul di sebelah.",
-        alt: "Dua cip imej dalam sesebuah nota, dengan gambar buku nota dalam galeri Nota.",
-        caption: "Cip kecil dalam nota anda. Gambar penuh di sebelahnya.",
-      },
-      {
-        id: "preview",
-        name: "Pratonton langsung",
-        title: "Tulis dulu. Kemudian lihat.",
-        description:
-          "Lihat Markdown anda terbentuk di sebelah editor dengan pratonton belah langsung. Tukar ke mod bacaan bila anda cuma mahu menyelami halaman itu.",
-        alt: "Sumber Markdown di sebelah tajuk, senarai semak, dan petikan yang telah dipaparkan dalam Nota.",
-        caption:
-          "Perkataan anda di satu sisi. Halaman anda terbentuk di sisi satu lagi.",
+          "Nota memaparkan Markdown anda dalam panel di sebelah editor. Tajuk, senarai semak, dan jadual semuanya muncul di situ. Rajah Mermaid turut dilukis, jadi carta alir dalam nota anda kelihatan sebagai carta alir.",
+        alt: "Sumber Markdown di sebelah pratonton terpaparnya dalam Nota, dengan senarai semak, jadual, dan dua rajah Mermaid.",
+        caption: "Anda menulis di kiri dan melihat halamannya di kanan.",
       },
       {
         id: "html",
-        name: "Pratonton HTML",
-        title: "Halaman itu halaman.",
+        name: "HTML",
+        title: "Lihat halamannya, bukan sekadar kodnya.",
         description:
-          "Buka fail .html dan lihat WebKit melukisnya di sebelah editor. Stylesheet dan gambar di sebelah fail itu turut serta. Suntingan yang belum disimpan itulah halamannya.",
-        alt: "Sumber HTML di sebelah halaman langsungnya dalam Nota, dengan tab Small things dan Field notes.",
-        caption:
-          "Sumber di satu sisi. Halaman, seperti yang dilihat pelayar, di sisi satu lagi.",
+          "Buka fail .html dan Nota melukis halaman sebenar di sebelah editor. Gaya digunakan, butang boleh diklik, dan skrip berjalan, sama seperti dalam pelayar.",
+        alt: "Sumber HTML di sebelah halaman langsungnya dalam Nota, sebuah tapak demo kecil dengan kad dan butang.",
+        caption: "Pratonton itu berkelakuan seperti tab pelayar sebenar.",
       },
       {
-        id: "tables",
-        name: "Jadual CSV",
-        title: "Hamparan, masih fail teks.",
+        id: "latex",
+        name: "LaTeX",
+        title: "Kertas anda, ditaip atur sambil anda menulis.",
         description:
-          "Fail .csv atau .tsv dibuka dengan grid di sebelah editor. Isih lajur, tukar halaman, klik baris untuk mendarat padanya dalam fail. Fail kekal teks biasa.",
-        alt: "Products.csv dalam Nota, dengan sumber dipisahkan koma di sebelah jadual yang boleh diisih.",
-        caption: "Fail yang boleh anda cari. Jadual yang boleh anda baca.",
+          "Buka fail .tex dan Nota menaip aturnya di sebelah sumber. Abstrak, bahagian bernombor, dan persamaan bernombor semuanya muncul seperti dalam kertas yang siap.",
+        alt: "Sumber LaTeX di sebelah kertas yang ditaip atur dalam Nota, dengan abstrak, bahagian bernombor, dan persamaan.",
+        caption: "Markup di kiri menjadi kertas di kanan.",
+      },
+      {
+        id: "json",
+        name: "JSON",
+        title: "Baca JSON sebagai pokok.",
+        description:
+          "Fail .json dibuka dengan pokok boleh lipat di sebelah teksnya. Ia menunjukkan setiap kunci dengan nilainya, diwarnakan mengikut jenis, dan menyerlahkan baris yang anda berada padanya. Lipat bahagian yang anda tak perlukan.",
+        alt: "Sumber JSON di sebelah pokok boleh lipat dalam Nota, memaparkan kunci dan nilai bertaip dengan satu baris dipilih.",
+        caption: "Pokok itu memudahkan anda bergerak dalam fail yang panjang.",
+      },
+      {
+        id: "xml",
+        name: "XML",
+        title: "XML dapat pokok yang sama.",
+        description:
+          "Fail .xml dibuka dengan pokok boleh lipat yang sama, dan ia menunjukkan atribut serta teks CDATA pada tempatnya. Tag yang bersarang dalam terbuka satu lapis pada satu masa, jadi anda boleh masuk sedalam yang perlu.",
+        alt: "Sumber XML di sebelah pokok boleh lipat dalam Nota, menunjukkan atribut dan teks CDATA.",
+        caption: "Atribut dan teks CDATA muncul terus dalam pokok itu.",
+      },
+      {
+        id: "csv",
+        name: "CSV",
+        title: "Lihat CSV anda sebagai jadual.",
+        description:
+          "Fail .csv atau .tsv dibuka sebagai jadual boleh isih di sebelah editor. Isih ikut lajur, tukar halaman baris, atau eksport satu salinan. Failnya sendiri kekal teks biasa.",
+        alt: "Sumber dipisahkan koma di sebelah jadual boleh isih dalam Nota, dengan penomboran halaman dan butang Export CSV.",
+        caption: "Fail yang sama, cuma lebih senang dibaca.",
       },
       {
         id: "sql",
-        name: "Dump SQL",
-        title: "Jalankan dump. Baca pangkalan data.",
+        name: "SQL",
+        title: "Jalankan dump SQL dan buat pertanyaan padanya.",
         description:
-          "Fail .sql dijalankan ke SQLite dalam memori — bukan fail di cakera. Pilih jadual, tanya dalam kotak, salin sel. Tiada apa yang ditulis semula.",
-        alt: "Shop.sql dalam Nota, dengan dump di sebelah jadual products dan kotak pertanyaan.",
-        caption: "Dump di kiri. Pangkalan data yang dibinanya, di kanan.",
-      },
-      {
-        id: "zen",
-        name: "Mod zen",
-        title: "Sedikit lebih lapang di skrin.",
-        description:
-          "Sembunyikan tab, kawalan, dan bar status. Mod zen memberi tulisan anda ruang untuk bernafas, sementara pintasan papan kekunci biasa anda terus berfungsi.",
-        alt: "Nota dalam susunan paling minimum dengan tab, kawalan, nombor baris, dan bar statusnya disembunyikan.",
-        caption: "Pandangan yang lebih tenang bagi notepad kecil yang sama.",
-      },
-      {
-        id: "vim",
-        name: "Gerakan Vim",
-        title: "Jari anda sudah tahu jalannya.",
-        description:
-          "Hidupkan mod Vim untuk gerakan dan pintasan papan kekunci yang biasa. Bergerak dalam nota anda, buat suntingan, dan kekal dalam rentak anda.",
-        alt: "Editor teks Nota dengan Vim dihidupkan dan lencana mod Normal.",
-        caption: "Rentak yang biasa. Notepad Mac yang asli.",
-      },
-      {
-        id: "text",
-        name: "Fail teks",
-        title: "Seret masuk. Jadikan satu tab.",
-        description:
-          "Teks biasa, Markdown, kod, atau README tanpa sambungan fail. Nota membuka fail teks UTF-8 pelbagai jenis, jadi perincian kecil pun ada tempatnya.",
-        alt: "Settings.json dalam Nota, dengan tab README, notes, dan Products.csv di sebelahnya.",
+          "Nota menjalankan fail .sql ke dalam pangkalan data SQLite dalam memori, bukan fail di cakera. Pilih jadual untuk dilihat, atau tulis pertanyaan anda sendiri dengan nama lajur dicadangkan sambil anda menaip. Hasilnya dieksport sebagai CSV.",
+        alt: "Dump SQL di sebelah kotak pertanyaan dalam Nota, dengan autolengkap nama lajur dan grid hasil.",
         caption:
-          "Fail tetapan, README, nota, CSV. Tetingkap kecil yang sama.",
+          "Dump di kiri menjadi pangkalan data yang boleh anda tanya di kanan.",
       },
       {
-        id: "books",
-        name: "Buku & PDF",
-        title: "Simpan rujukan anda dekat.",
+        id: "images",
+        name: "Imej",
+        title: "Gambar tinggal di dalam nota anda.",
         description:
-          "Buka EPUB, PDF, gambar, atau GIF dalam tabnya sendiri. Baca dan tatal bersebelahan nota anda, semuanya dalam tetingkap kecil yang sama.",
-        alt: "Sebuah EPUB terbuka dalam Nota dengan senarai kandungannya di bar sisi, di sebelah tab Markdown dan teks.",
-        caption: "Satu nota, satu buku, satu gambar. Semuanya dialu-alukan.",
+          "Tampal tangkap layar atau seret gambar ke dalam nota dan ia menjadi cip kecil dalam teks anda. Galeri di sebelah editor menyimpan setiap gambar yang anda tambah, jadi tulisan anda kekal mudah dibaca dan tiada apa yang hilang.",
+        alt: "Dua cip imej dalam sesebuah nota, dengan kedua-dua gambar dalam galeri imej Nota.",
+        caption:
+          "Cip itu duduk dalam teks anda dan gambar penuhnya menunggu dalam galeri.",
+      },
+      {
+        id: "pdf",
+        name: "PDF",
+        title: "Simpan PDF di sebelah nota anda.",
+        description:
+          "PDF dibuka baca sahaja dalam tabnya sendiri, dengan imej kecil setiap halaman di bar sisi. Klik imej kecil untuk terus ke halaman itu, dan bar status menunjukkan halaman yang anda berada padanya.",
+        alt: "Sebuah PDF dibuka baca sahaja dalam Nota, dengan bar sisi Pages berisi imej kecil setiap halaman.",
+        caption:
+          "Dokumen itu hanya satu tab jauhnya daripada nota yang anda tulis.",
+      },
+      {
+        id: "epub",
+        name: "EPUB",
+        title: "Baca buku dalam satu tab.",
+        description:
+          "EPUB dibuka baca sahaja dengan senarai kandungannya di bar sisi: bahagian, bab, dan seksyen. Klik mana-mana bab untuk terus ke sana, dan bar status menunjukkan bab yang anda sedang baca.",
+        alt: "Sebuah EPUB terbuka dalam Nota dengan bar sisi Contents menyenaraikan bahagian, bab, dan seksyen.",
+        caption:
+          "Dua puluh tujuh bab, dan anda nampak yang mana satu anda baca.",
+      },
+      {
+        id: "picture",
+        name: "Gambar",
+        title: "Buka satu gambar. Itu sahaja.",
+        description:
+          "PNG, JPEG, GIF, atau HEIC dibuka di tengah dalam tab baca sahajanya sendiri. Bar status menunjukkan saiznya dalam piksel. Tiada apa-apa untuk diklik dahulu.",
+        alt: "Sebuah PNG dibuka baca sahaja dalam Nota, di tengah, dengan dimensinya pada bar status.",
+        caption: "Buka, lihat, dan tutup tabnya.",
       },
       {
         id: "bookmarks",
         name: "Penanda buku",
-        title: "Ada perkara yang berbaloi disimpan.",
+        title: "Simpan fail biasa anda berdekatan.",
         description:
-          "Tandakan fail yang kerap anda buka, dan buka semula bila-bila anda perlukannya. Bacaan atau rujukan seterusnya sentiasa dekat.",
-        alt: "Panel penanda buku Nota terapung di atas tetingkap nota, menyenaraikan empat fail tersimpan dengan ikon failnya.",
-        caption: "Simpan yang berguna dalam capaian.",
+          "Tandakan tab yang anda sedang buka dan ia masuk ke dalam senarai pada panel penanda buku. Buka panel itu kemudian, taip beberapa huruf namanya, dan terus kembali ke fail itu.",
+        alt: "Panel penanda buku Nota terapung di atas editor, dengan medan carian dan senarai fail tersimpan.",
+        caption:
+          "Fail yang anda sering kembali padanya sentiasa satu carian sahaja.",
+      },
+      {
+        id: "zen",
+        name: "Mod zen",
+        title: "Sembunyikan semuanya kecuali tulisan anda.",
+        description:
+          "Mod zen mengalih keluar tab, kawalan, nombor baris, dan bar status. Yang tinggal hanyalah tetingkap dan tulisan anda.",
+        alt: "Nota dalam mod zen: tetingkap kosong dengan hanya perkataan “Zen mode” padanya.",
+        caption: "Notepad yang sama, cuma kurang benda di skrin.",
       },
     ],
   },
@@ -150,53 +183,53 @@ const ms: Translation = {
       "curl --proto '=https' --tlsv1.2 -LsSf https://nota-app.xyz/install.sh | sh",
     copy: "Salin",
     copied: "Disalin",
-    aboutGatekeeper: "Tentang Gatekeeper",
+    aboutGatekeeper: "Kenapa macOS mungkin menyekat Nota",
     gatekeeperNote:
-      "Nota belum disahkan (notarized) lagi — benarkan di Tetapan Sistem › Privasi & Keselamatan jika macOS menyekatnya.",
+      "Nota belum disahkan (notarized) oleh Apple lagi. Jika macOS menyekatnya, buka Tetapan Sistem › Privasi & Keselamatan dan benarkan ia di situ.",
   },
   fileTypes: {
-    eyebrow: "Teks. Satu halaman. Satu gambar.",
-    heading: "Seret masuk.",
+    eyebrow: "Teks, halaman, dan gambar",
+    heading: "Seret masuk hampir apa sahaja.",
     intro:
-      "Kebanyakan fail dibuka sebagai teks. Ada yang dibaca. Beberapa mendapat panel di sebelah editor.",
+      "Nota membuka setiap fail dengan cara yang paling sesuai untuknya. Ini jenis-jenis yang ia kenal.",
     columns: {
       edit: {
         title: "Sunting",
-        note: "Teks biasa kekal teks.",
+        note: "Ini dibuka sebagai teks yang boleh anda sunting dan simpan.",
       },
       preview: {
         title: "Pratonton",
-        note: "Dibuka untuk dibaca, bukan ditulis.",
+        note: "Ini dibuka baca sahaja, semata-mata untuk dibaca.",
       },
       split: {
         title: "Belah",
-        note: "Sumber di satu sisi. Pratonton di sisi satu lagi.",
+        note: "Ini dibuka dengan pratonton di sebelah editor.",
       },
     },
-    footer: "Dan apa-apa lagi yang dinyahkod sebagai UTF-8.",
+    footer: "Serta apa-apa fail lain yang boleh dibaca sebagai teks UTF-8.",
   },
   openSource: {
     eyebrow: "Terasa seperti Mac anda. Kerana memang begitu.",
     heading: ["Milik anda.", "Terbuka untuk semua."] as [string, string],
     description:
-      "Dibina secara asli untuk macOS, dengan rasa biasa sebuah aplikasi yang memang tempatnya di situ. Tiada akaun untuk dibuat. Dan kod sumbernya terbuka untuk sesiapa yang ingin tahu.",
+      "Nota dibina secara asli untuk macOS, jadi ia berfungsi seperti aplikasi Mac anda yang lain. Tiada akaun untuk dibuat dan tiada apa untuk dilog masuk. Keseluruhan kod sumbernya ada di GitHub jika anda ingin melihatnya.",
     link: "Lihat di GitHub",
     values: [
       {
         number: "01",
-        title: "Asli secara semula jadi",
-        description: "Dibina dengan Swift dan AppKit. Selesa di Mac anda.",
+        title: "Asli untuk Mac",
+        description:
+          "Ditulis dengan Swift dan AppKit, jadi rasanya seperti aplikasi Mac anda yang lain.",
       },
       {
         number: "02",
-        title: "Terbuka atas pilihan",
-        description:
-          "Baca kodnya, cadangkan idea, atau jadikan ia milik anda.",
+        title: "Sumber terbuka",
+        description: "Baca kodnya, cadangkan idea, atau jadikan ia milik anda.",
       },
       {
         number: "03",
         title: "Sedia bila anda sedia",
-        description: "Tiada log masuk diperlukan. Buka Nota dan mula menaip.",
+        description: "Tiada pendaftaran. Buka Nota dan mula menaip.",
       },
     ],
   },
@@ -206,7 +239,8 @@ const ms: Translation = {
       string,
       string,
     ],
-    description: "Ia tak perlu jadi sesuatu yang besar. Cukup buka satu tab.",
+    description:
+      "Ia tak perlu jadi idea yang besar. Cukup buka satu tab dan tuliskannya.",
     download: "Muat turun untuk macOS",
     compatibility: "Untuk macOS 14 dan ke atas",
   },

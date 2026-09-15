@@ -1,7 +1,6 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-import { getScreenshot } from "../screenshots";
+import ThemeImage from "./ThemeImage.astro";
+import { getScreenshotPair, type ScreenshotPair } from "../screenshots";
 import type { Locale } from "../i18n/locales";
 import type { Translation } from "../i18n/en";
 
@@ -14,24 +13,27 @@ const { t, locale } = Astro.props;
 
 type FeatureId = Translation["showcase"]["features"][number]["id"];
 
-/** Screenshot for each feature, keyed so copy order cannot drift. */
-const featureImages: Record<FeatureId, ImageMetadata> = {
-  tabs: getScreenshot(locale, "editor"),
-  images: getScreenshot(locale, "images"),
-  preview: getScreenshot(locale, "split"),
-  html: getScreenshot(locale, "html"),
-  tables: getScreenshot(locale, "csv"),
-  sql: getScreenshot(locale, "sql"),
-  zen: getScreenshot(locale, "quiet"),
-  vim: getScreenshot(locale, "vim"),
-  text: getScreenshot(locale, "text"),
-  books: getScreenshot(locale, "book"),
-  bookmarks: getScreenshot(locale, "bookmarks"),
+/** Screenshot pair for each feature, keyed so copy order cannot drift. */
+const featureImages: Record<FeatureId, ScreenshotPair> = {
+  notes: getScreenshotPair(locale, "notes"),
+  markdown: getScreenshotPair(locale, "markdown"),
+  html: getScreenshotPair(locale, "html"),
+  latex: getScreenshotPair(locale, "latex"),
+  json: getScreenshotPair(locale, "json"),
+  xml: getScreenshotPair(locale, "xml"),
+  csv: getScreenshotPair(locale, "csv"),
+  sql: getScreenshotPair(locale, "sql"),
+  images: getScreenshotPair(locale, "images"),
+  pdf: getScreenshotPair(locale, "pdf"),
+  epub: getScreenshotPair(locale, "epub"),
+  picture: getScreenshotPair(locale, "picture"),
+  bookmarks: getScreenshotPair(locale, "bookmarks"),
+  zen: getScreenshotPair(locale, "zen"),
 };
 
 const features = t.showcase.features.map((feature) => ({
   ...feature,
-  image: featureImages[feature.id],
+  ...featureImages[feature.id],
 }));
 const initialIndex = 0;
 const offsetFor = (index: number) =>
@@ -128,12 +130,12 @@ const offsetFor = (index: number) =>
           >
             <figure>
               <div class="feature-image-stage">
-                <Image
-                  src={feature.image}
+                <ThemeImage
+                  light={feature.light}
+                  dark={feature.dark}
                   alt={feature.alt}
                   widths={[640, 1000, 1600, 2000]}
                   sizes="(max-width: 740px) 90vw, (max-width: 1200px) 54vw, 660px"
-                  format="webp"
                   loading="lazy"
                 />
               </div>
@@ -341,8 +343,8 @@ const offsetFor = (index: number) =>
     gap: 44px;
     align-items: center;
     padding: 26px 32px 28px;
-    background: #f3f1eb;
-    border: 1px solid #e5e1d8;
+    background: var(--card);
+    border: 1px solid var(--card-border);
     border-radius: 22px;
     min-height: 540px;
   }
@@ -380,7 +382,7 @@ const offsetFor = (index: number) =>
     white-space: nowrap;
     transform: translateY(calc(-50% + var(--offset) * 51px)) scale(var(--scale))
       rotateX(calc(var(--offset) * -9deg));
-    opacity: 0.72;
+    opacity: var(--wheel-dim);
   }
   .wheel-tab[aria-selected="true"] {
     font-weight: 550;
@@ -445,22 +447,22 @@ const offsetFor = (index: number) =>
   .feature-image-stage {
     display: flex;
     align-items: center;
-    aspect-ratio: 1.43;
+    aspect-ratio: 1.55;
     border-radius: 12px;
     padding: 17px;
-    background: #e9e5dc;
+    background: var(--pill);
   }
-  .feature-image-stage img {
+  .feature-image-stage :global(img) {
     width: 100%;
     height: auto;
     border-radius: 7px;
-    outline: 1px solid #0000001a;
-    box-shadow: 0 5px 22px #55452612;
+    outline: 1px solid var(--image-outline);
+    box-shadow: var(--image-shadow);
   }
   .feature-panel figcaption {
     margin-top: 17px;
     font-size: 10px;
-    color: #696358;
+    color: var(--footnote);
     text-wrap: balance;
   }
   .feature-fallback details {
@@ -546,11 +548,10 @@ const offsetFor = (index: number) =>
       line-height: 1.75;
     }
     .feature-image-stage {
-      aspect-ratio: 1.75;
       padding: 10px;
       border-radius: 9px;
     }
-    .feature-image-stage img {
+    .feature-image-stage :global(img) {
       border-radius: 4px;
     }
     .feature-panel figcaption {

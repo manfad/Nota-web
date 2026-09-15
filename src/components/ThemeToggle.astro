@@ -1,0 +1,152 @@
+---
+import Icon from "./Icon.astro";
+import type { Translation } from "../i18n/en";
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  data-theme-toggle
+  aria-pressed="false"
+  aria-label={t.nav.theme.toDark}
+  data-label-to-dark={t.nav.theme.toDark}
+  data-label-to-light={t.nav.theme.toLight}
+>
+  <span class="theme-icon theme-icon-moon"><Icon name="moon" size={16} /></span>
+  <span class="theme-icon theme-icon-sun"><Icon name="sun" size={17} /></span>
+</button>
+
+<script>
+  const STORAGE_KEY = "theme";
+  const PAPER = { light: "#faf9f6", dark: "#151412" };
+
+  type Theme = "light" | "dark";
+
+  const root = document.documentElement;
+  const query = window.matchMedia("(prefers-color-scheme: dark)");
+  const buttons = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]"),
+  ];
+  const themeColor = document.querySelector<HTMLMetaElement>(
+    'meta[name="theme-color"]',
+  );
+
+  /** The viewer's explicit pick, or null while the page follows the system. */
+  function stored(): Theme | null {
+    try {
+      const value = localStorage.getItem(STORAGE_KEY);
+      return value === "light" || value === "dark" ? value : null;
+    } catch {
+      // Storage may be unavailable (private mode); follow the system instead.
+      return null;
+    }
+  }
+
+  const system = (): Theme => (query.matches ? "dark" : "light");
+  const effective = (): Theme => stored() ?? system();
+
+  /**
+   * Keep the dark `<source>` of every themed picture in step. Following the
+   * system means handing the decision back to the media query.
+   */
+  function syncSources() {
+    const choice = stored();
+    const media =
+      choice === "dark"
+        ? "all"
+        : choice === "light"
+          ? "not all"
+          : "(prefers-color-scheme: dark)";
+    document
+      .querySelectorAll<HTMLSourceElement>("[data-theme-source]")
+      .forEach((source) => {
+        source.media = media;
+      });
+  }
+
+  function sync() {
+    const dark = effective() === "dark";
+    buttons.forEach((button) => {
+      button.setAttribute("aria-pressed", String(dark));
+      const label = dark
+        ? button.dataset.labelToLight
+        : button.dataset.labelToDark;
+      if (label) button.setAttribute("aria-label", label);
+    });
+    themeColor?.setAttribute("content", dark ? PAPER.dark : PAPER.light);
+    syncSources();
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const next: Theme = effective() === "dark" ? "light" : "dark";
+      // Matching the system again drops the override, so the page follows it.
+      const follows = next === system();
+      try {
+        if (follows) localStorage.removeItem(STORAGE_KEY);
+        else localStorage.setItem(STORAGE_KEY, next);
+      } catch {
+        // Ignore write failures; the theme still changes for this visit.
+      }
+      if (follows) root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", next);
+      sync();
+    });
+  });
+
+  query.addEventListener("change", () => {
+    if (!stored()) sync();
+  });
+
+  sync();
+</script>
+
+<style>
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-height: 44px;
+    margin-inline: -10px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    transition: color 150ms;
+  }
+  .theme-toggle:hover {
+    color: var(--accent);
+  }
+  .theme-icon {
+    display: none;
+  }
+  .theme-icon-moon {
+    display: flex;
+  }
+  :global(:root[data-theme="dark"]) .theme-icon-moon {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .theme-icon-sun {
+    display: flex;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .theme-icon-moon {
+      display: none;
+    }
+    :global(:root:not([data-theme="light"])) .theme-icon-sun {
+      display: flex;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+      transition: none;
+    }
+  }
+</style>

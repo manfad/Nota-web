@@ -6,6 +6,10 @@
   src: url("/dm-sans-latin.woff2") format("woff2");
 }
 
+/*
+ * Light palette. Every colour on the page comes from a token here, so the
+ * dark palette below only has to redefine values, never rules.
+ */
 :root {
   font-family:
     "DM Sans",
@@ -13,16 +17,140 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #292824;
-  background: #faf9f6;
   font-synthesis: none;
+  color-scheme: light;
+
   --paper: #faf9f6;
-  --muted: #6b675f;
   --ink: #292824;
+  --muted: #6b675f;
   --accent: #9c5d2d;
   --line: #e8e5de;
+
   --stage: #eeece5;
+  --stage-border: #e3e0d7;
+  --stage-glow: #e5d9c7;
+  --card: #f3f1eb;
+  --card-border: #e5e1d8;
+  --pill: #e9e5dc;
+  --surface: #ffffff;
+  --surface-hover: #f2f0e9;
+  --divider: #d9d4c8;
+
+  --footnote: #696358;
+  --heading-dim: #858073;
+  --values-number: #706757;
+  --footer-text: #736e63;
+
+  --button-bg: #292824;
+  --button-bg-hover: #484339;
+  --button-fg: #ffffff;
+  --button-shadow: 0 1px 2px #0002, inset 0 1px #fff2;
+
+  --status-dot: #ae8255;
+  --status-dot-halo: #ae82550e;
+
+  --image-outline: #0000001a;
+  --image-shadow: 0 5px 22px #55452612;
+  --hero-image-shadow: 0 8px 40px #5641291a;
+  --shadow-menu: 0 10px 30px #4c412c1f, 0 1px 2px #0000000d;
+  --shadow-popover: 0 8px 24px #00000014, 0 2px 6px #0000000f;
+  --shadow-tab: 0 1px 2px #0000001a;
+
+  /* Resting opacity of the unselected feature-wheel names. */
+  --wheel-dim: 0.72;
+
+  color: var(--ink);
+  background: var(--paper);
 }
+
+/* Warm, paper-like dark. Applied when the system asks for it… */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --paper: #151412;
+    --ink: #ece9e2;
+    --muted: #a39d92;
+    --accent: #d9a15c;
+    --line: #2a2823;
+
+    --stage: #1a1815;
+    --stage-border: #2b2925;
+    --stage-glow: #26201a;
+    --card: #1d1b18;
+    --card-border: #2b2925;
+    --pill: #262320;
+    --surface: #201e1a;
+    --surface-hover: #2a2722;
+    --divider: #38352f;
+
+    --footnote: #8d877c;
+    --heading-dim: #8d877c;
+    --values-number: #8d877c;
+    --footer-text: #a39d92;
+
+    --button-bg: #ece9e2;
+    --button-bg-hover: #fbf9f4;
+    --button-fg: #1a1815;
+    --button-shadow: 0 1px 2px #00000073, inset 0 1px #ffffff33;
+
+    --status-dot: #d9a15c;
+    --status-dot-halo: #d9a15c26;
+
+    --image-outline: #ffffff1a;
+    --image-shadow: 0 6px 24px #0000005e;
+    --hero-image-shadow: 0 10px 44px #00000073;
+    --shadow-menu: 0 10px 30px #00000080, 0 1px 2px #0000004d;
+    --shadow-popover: 0 8px 24px #00000073, 0 2px 6px #0000004d;
+    --shadow-tab: 0 1px 2px #00000073;
+
+    --wheel-dim: 0.82;
+  }
+}
+
+/* …and again when the viewer picks it from the header. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #151412;
+  --ink: #ece9e2;
+  --muted: #a39d92;
+  --accent: #d9a15c;
+  --line: #2a2823;
+
+  --stage: #1a1815;
+  --stage-border: #2b2925;
+  --stage-glow: #26201a;
+  --card: #1d1b18;
+  --card-border: #2b2925;
+  --pill: #262320;
+  --surface: #201e1a;
+  --surface-hover: #2a2722;
+  --divider: #38352f;
+
+  --footnote: #8d877c;
+  --heading-dim: #8d877c;
+  --values-number: #8d877c;
+  --footer-text: #a39d92;
+
+  --button-bg: #ece9e2;
+  --button-bg-hover: #fbf9f4;
+  --button-fg: #1a1815;
+  --button-shadow: 0 1px 2px #00000073, inset 0 1px #ffffff33;
+
+  --status-dot: #d9a15c;
+  --status-dot-halo: #d9a15c26;
+
+  --image-outline: #ffffff1a;
+  --image-shadow: 0 6px 24px #0000005e;
+  --hero-image-shadow: 0 10px 44px #00000073;
+  --shadow-menu: 0 10px 30px #00000080, 0 1px 2px #0000004d;
+  --shadow-popover: 0 8px 24px #00000073, 0 2px 6px #0000004d;
+  --shadow-tab: 0 1px 2px #00000073;
+
+  --wheel-dim: 0.82;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -32,6 +160,7 @@ html {
 }
 body {
   margin: 0;
+  background: var(--paper);
 }
 a {
   color: inherit;
@@ -77,8 +206,8 @@ svg {
   left: 12px;
   transform: translateY(-160%);
   z-index: 20;
-  background: var(--ink);
-  color: white;
+  background: var(--button-bg);
+  color: var(--button-fg);
   padding: 12px 20px;
   border-radius: 8px;
 }
@@ -131,19 +260,17 @@ svg {
   min-height: 48px;
   padding: 12px 22px;
   border-radius: 9px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--button-bg);
+  color: var(--button-fg);
   font-size: 14px;
   font-weight: 550;
-  box-shadow:
-    0 1px 2px #0002,
-    inset 0 1px #fff2;
+  box-shadow: var(--button-shadow);
   transition:
     background 150ms,
     transform 150ms;
 }
 .button:hover {
-  background: #484339;
+  background: var(--button-bg-hover);
 }
 .button:active {
   transform: scale(0.96);
@@ -172,9 +299,9 @@ svg {
 .status-dot {
   width: 6px;
   height: 6px;
-  background: #ae8255;
+  background: var(--status-dot);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #ae82550e;
+  box-shadow: 0 0 0 4px var(--status-dot-halo);
 }
 h1 {
   font-size: clamp(44px, 5.2vw, 68px);
@@ -185,7 +312,7 @@ h1 {
   text-wrap: balance;
 }
 h1 span {
-  color: #858073;
+  color: var(--heading-dim);
 }
 .hero-description {
   font-size: 16px;
@@ -223,21 +350,21 @@ h1 span {
 }
 .screenshot-stage {
   background: var(--stage);
-  border: 1px solid #e3e0d7;
+  border: 1px solid var(--stage-border);
   border-radius: 14px;
   padding: 32px;
   overflow: hidden;
   background-image: radial-gradient(
     ellipse at 50% 100%,
-    #e5d9c7,
+    var(--stage-glow),
     transparent 75%
   );
 }
 .app-screenshot {
   width: 100%;
   border-radius: 9px;
-  box-shadow: 0 8px 40px #5641291a;
-  outline: 1px solid #0000001a;
+  box-shadow: var(--hero-image-shadow);
+  outline: 1px solid var(--image-outline);
 }
 figcaption {
   color: var(--muted);
@@ -289,22 +416,22 @@ h2 {
 }
 .values-list {
   padding: 8px 28px;
-  background: #f3f1eb;
-  border: 1px solid #e5e1d8;
+  background: var(--card);
+  border: 1px solid var(--card-border);
   border-radius: 22px;
 }
 .values-list > div {
   display: flex;
   gap: 24px;
   padding: 22px 0;
-  border-bottom: 1px solid #e5e1d8;
+  border-bottom: 1px solid var(--card-border);
 }
 .values-list > div:last-child {
   border-bottom: 0;
 }
 .values-list > div > span {
   font-size: 10px;
-  color: #706757;
+  color: var(--values-number);
   padding-top: 3px;
   font-family: ui-monospace, monospace;
 }
@@ -353,7 +480,7 @@ h2 {
   gap: 7px;
 }
 .site-footer p {
-  color: #736e63;
+  color: var(--footer-text);
   font-size: 11px;
 }
 .site-footer > a:last-child {
@@ -519,6 +646,20 @@ h2 {
   }
   .site-footer > a:last-child {
     font-size: 10px;
+  }
+}
+@media (max-width: 380px) {
+  /* Buy the theme toggle its 44px hit area without crowding the wordmark. */
+  .site-header .wordmark {
+    font-size: 20px;
+    gap: 7px;
+  }
+  .site-header .wordmark img {
+    width: 32px;
+    height: 32px;
+  }
+  .site-header nav {
+    gap: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

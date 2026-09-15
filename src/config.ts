@@ -7,18 +7,7 @@ export const site = {
 
 /** Extensions Nota actually opens. Do not invent formats here. */
 export const fileTypes = {
-  edit: [
-    ".txt",
-    ".json",
-    ".yaml",
-    ".toml",
-    ".xml",
-    ".js",
-    ".py",
-    ".swift",
-    ".css",
-    "README",
-  ],
+  edit: [".txt", ".yaml", ".toml", ".js", ".py", ".swift", ".css", "README"],
   preview: [
     ".pdf",
     ".epub",
@@ -30,7 +19,17 @@ export const fileTypes = {
     ".bmp",
     ".rtf",
   ],
-  split: [".md", ".html", ".tex", ".csv", ".tsv", ".sql", ".svg"],
+  split: [
+    ".md",
+    ".html",
+    ".tex",
+    ".json",
+    ".xml",
+    ".csv",
+    ".tsv",
+    ".sql",
+    ".svg",
+  ],
 } as const;
 
 export type FileTypeColumn = keyof typeof fileTypes;

@@ -2,9 +2,11 @@
 import { Image } from "astro:assets";
 import Icon from "../components/Icon.astro";
 import LanguagePicker from "../components/LanguagePicker.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import { site } from "../config";
 import appIcon from "../assets/icon.png";
-import { getScreenshot } from "../screenshots";
+import ThemeImage from "../components/ThemeImage.astro";
+import { getScreenshotPair } from "../screenshots";
 import FeatureShowcase from "../components/FeatureShowcase.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 import FileTypes from "../components/FileTypes.astro";
@@ -25,7 +27,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = getTranslation(locale);
 const { htmlLang } = getLocale(locale);
-const hero = getScreenshot(locale, "split");
+const hero = getScreenshotPair(locale, "markdown");
 
 const socialImage = Astro.site
   ? new URL("/social.png", Astro.site).href
@@ -40,6 +42,25 @@ const hrefFor = (code: Locale) =>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#faf9f6" />
+    <script is:inline>
+      // Settle the theme before first paint so nothing flashes.
+      (function () {
+        var root = document.documentElement;
+        var choice = null;
+        try {
+          choice = localStorage.getItem("theme");
+        } catch (error) {
+          // Storage may be unavailable; fall back to the system preference.
+        }
+        if (choice !== "light" && choice !== "dark") choice = null;
+        if (choice) root.setAttribute("data-theme", choice);
+        var dark = choice
+          ? choice === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#151412" : "#faf9f6");
+      })();
+    </script>
     <meta name="description" content={t.meta.description} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={t.meta.title} />
@@ -95,6 +116,7 @@ const hrefFor = (code: Locale) =>
         <a class="nav-text" href={site.repository}
           >{t.nav.github} <Icon name="arrow" size={13} /></a
         >
+        <ThemeToggle t={t} />
         <LanguagePicker locale={locale} />
         <a class="button button-small" href={site.download}
           >{t.nav.download} <Icon name="arrow" size={15} /></a
@@ -132,13 +154,13 @@ const hrefFor = (code: Locale) =>
 
         <figure class="hero-figure">
           <div class="screenshot-stage">
-            <Image
+            <ThemeImage
               class="app-screenshot"
-              src={hero}
+              light={hero.light}
+              dark={hero.dark}
               alt={t.hero.screenshotAlt}
               widths={[640, 960, 1280, 1920, 2300]}
               sizes="(max-width: 720px) calc(100vw - 48px), (max-width: 1200px) 88vw, 1064px"
-              format="webp"
               loading="eager"
               fetchpriority="high"
             />
